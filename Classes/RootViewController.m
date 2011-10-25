@@ -57,7 +57,7 @@
 																							target:self 
 																							action:@selector(refresh)] autorelease];
 	// Parse
-	NSURL *feedURL = [NSURL URLWithString:@"http://images.apple.com/main/rss/hotnews/hotnews.rss"];
+	NSURL *feedURL = [NSURL URLWithString:@"http://tickles.local:8080/messages.xml?user_token=EFX743W69A7SH"];
 	feedParser = [[MWFeedParser alloc] initWithFeedURL:feedURL];
 	feedParser.delegate = self;
 	feedParser.feedParseType = ParseTypeFull; // Parse feed info and all items
