@@ -30,7 +30,7 @@
 #import <UIKit/UIKit.h>
 #import "MWFeedParser.h"
 
-@interface RootViewController : UITableViewController <MWFeedParserDelegate> {
+@interface MWFeedRootViewController : UITableViewController <MWFeedParserDelegate> {
 	
 	// Parsing
 	MWFeedParser *feedParser;
@@ -41,6 +41,8 @@
 	NSDateFormatter *formatter;
 	
 }
+
+@property (nonatomic, retain) NSURL *feedURL;
 
 // Properties
 @property (nonatomic, retain) NSArray *itemsToDisplay;

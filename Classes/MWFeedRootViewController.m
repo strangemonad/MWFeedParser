@@ -27,14 +27,25 @@
 //  THE SOFTWARE.
 //
 
-#import "RootViewController.h"
+#import "MWFeedRootViewController.h"
 #import "NSString+HTML.h"
 #import "MWFeedParser.h"
 #import "DetailTableViewController.h"
 
-@implementation RootViewController
+@interface MWFeedRootViewController ()
+
+@property (nonatomic, retain) MWFeedParser *feedParser;
+
+- (MWFeedParser *)feedParserWithURL:(NSURL *)url;
+
+@end
+
+
+@implementation MWFeedRootViewController
 
 @synthesize itemsToDisplay;
+@synthesize feedURL;
+@synthesize feedParser;
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -57,13 +68,31 @@
 																							target:self 
 																							action:@selector(refresh)] autorelease];
 	// Parse
-	NSURL *feedURL = [NSURL URLWithString:@"http://tickles.local:8080/messages.xml?user_token=EFX743W69A7SH"];
-	feedParser = [[MWFeedParser alloc] initWithFeedURL:feedURL];
-	feedParser.delegate = self;
-	feedParser.feedParseType = ParseTypeFull; // Parse feed info and all items
-	feedParser.connectionType = ConnectionTypeAsynchronously;
-	[feedParser parse];
+    self.feedParser = [self feedParserWithURL:self.feedURL];
+}
 
+- (void)viewDidUnload;
+{
+    self.feedParser.delegate = nil;
+    self.feedParser = nil;
+}
+
+#pragma mark -
+#pragma mark Accessors/Mutators
+
+- (void)setFeedURL:(NSURL *)inFeedURL;
+{
+    if (feedURL == inFeedURL) {
+        return;
+    }
+    
+    [feedURL release];
+    feedURL = [inFeedURL retain];
+    
+    if (inFeedURL) {
+        self.feedParser.delegate = nil;
+        self.feedParser = [self feedParserWithURL:inFeedURL];
+    }
 }
 
 #pragma mark -
@@ -183,8 +212,21 @@
 	[formatter release];
 	[parsedItems release];
 	[itemsToDisplay release];
-	[feedParser release];
     [super dealloc];
+}
+
+#pragma mark -
+#pragma mark Private Methods
+
+- (MWFeedParser *)feedParserWithURL:(NSURL *)url;
+{
+    MWFeedParser *aFeedParser = [[[MWFeedParser alloc] initWithFeedURL:url] autorelease];
+	aFeedParser.delegate = self;
+	aFeedParser.feedParseType = ParseTypeFull; // Parse feed info and all items
+	aFeedParser.connectionType = ConnectionTypeAsynchronously;
+	[aFeedParser parse];
+    
+    return aFeedParser;
 }
 
 @end
