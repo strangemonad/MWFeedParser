@@ -56,7 +56,7 @@
 	[super viewDidLoad];
 	
 	// Setup
-	self.title = @"Loading...";
+//	self.title = @"Loading...";
 	formatter = [[NSDateFormatter alloc] init];
 	[formatter setDateStyle:NSDateFormatterShortStyle];
 	[formatter setTimeStyle:NSDateFormatterShortStyle];
@@ -100,7 +100,7 @@
 
 // Reset and reparse
 - (void)refresh {
-	self.title = @"Refreshing...";
+//	self.title = @"Refreshing...";
 	[parsedItems removeAllObjects];
 	[feedParser stopParsing];
 	[feedParser parse];
@@ -117,7 +117,7 @@
 
 - (void)feedParser:(MWFeedParser *)parser didParseFeedInfo:(MWFeedInfo *)info {
 	NSLog(@"Parsed Feed Info: “%@”", info.title);
-	self.title = info.title;
+//	self.title = info.title;
 }
 
 - (void)feedParser:(MWFeedParser *)parser didParseFeedItem:(MWFeedItem *)item {
@@ -137,7 +137,7 @@
 
 - (void)feedParser:(MWFeedParser *)parser didFailWithError:(NSError *)error {
 	NSLog(@"Finished Parsing With Error: %@", error);
-	self.title = @"Failed";
+//	self.title = @"Failed";
 	self.itemsToDisplay = [NSArray array];
 	[parsedItems removeAllObjects];
 	self.tableView.userInteractionEnabled = YES;
