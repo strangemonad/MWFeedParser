@@ -132,6 +132,18 @@
 	hasEncounteredItems = NO;
 }
 
+- (void)setUpParse;
+{
+    [self reset];
+    
+    // Reset state for next parse
+	parsing = YES;
+	aborted = NO;
+	stopped = NO;
+	failed = NO;
+	parsingComplete = NO;
+}
+
 // Parse using URL for backwards compatibility
 - (BOOL)parse {
 

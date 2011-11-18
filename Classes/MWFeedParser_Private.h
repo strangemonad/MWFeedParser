@@ -48,6 +48,8 @@
 
 #pragma mark Private Methods
 
+- (void)setUpParse;
+
 // Parsing Methods
 - (void)reset;
 - (void)abortParsingEarly;
